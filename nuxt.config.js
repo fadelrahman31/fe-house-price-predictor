@@ -6,7 +6,7 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: '%s - fe-house-price-predictor',
+    titleTemplate: 'Home - House Price Predictor',
     title: 'fe-house-price-predictor',
     meta: [
       { charset: 'utf-8' },
@@ -37,6 +37,7 @@ export default {
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
+    '@nuxtjs/axios'
   ],
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
