@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-container>
+      
       <v-layout justify-center align-center>
         <v-container fluid>
           <h1>Selamat Datang!</h1>
@@ -12,194 +13,215 @@
               cols="12"
               md="7"
             >
-              <v-card
-                class="pa-3"
-                flat
-              >
-                <v-form
-                  ref="form"
-                  v-model= "valid"
-                >
-                  <h3>Masukkan jumlah kamar tidur</h3>
-                  <v-text-field
-                    v-model="bedrooms"
-                    :rules="rulesData"
-                    label="Jumlah kamar tidur, e.g. 0,1,2,.."
-                    type="number"
-                    required
-                  ></v-text-field>
-                
-                  <h3>Masukkan jumlah kamar mandi</h3>
-                  <v-text-field
-                    v-model="bathrooms"
-                    :rules="rulesData"
-                    type="number"
-                    label="Jumlah kamar mandi, e.g. 0,1,2,.."
-                    required
-                  ></v-text-field>
+              <v-expansion-panels focusable>
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    <b>Bagaimana cara menggunakan sistem ini?</b>
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <p>1. Klik pada tombol <b>Form Input Data Rumah</b> !</p>
+                    <p>2. Isi seluruh kolom data mengenai rumah anda! Pastikan seluruh kolom terisi</p>
+                    <p>3. Jika telah mengisi seluruh data, Anda dapat memastikan ulang isian anda pada box <i>Summary Input Info</i> !</p>
+                    <p>4. Apabila tombol <b>Submit and Predict Now!</b> sudah berwarna hijau, klik tombol tersebut untuk memulai proses prediksi!</p>
+                    <p>5. Tunggu hingga proses selesai dan anda akan menuju <i>page</i> baru berisi <b>hasil prediksi harga</b> rumah Anda!</p>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    <b>Form Input Data Rumah</b>
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-card
+                      class="pa-3"
+                      flat
+                    >
+                      <v-form
+                        ref="form"
+                        v-model= "valid"
+                      >
+                        <h3>Masukkan jumlah kamar tidur</h3>
+                        <v-text-field
+                          v-model="bedrooms"
+                          :rules="rulesData"
+                          label="Jumlah kamar tidur, e.g. 0,1,2,.."
+                          type="number"
+                          required
+                        ></v-text-field>
+                      
+                        <h3>Masukkan jumlah kamar mandi</h3>
+                        <v-text-field
+                          v-model="bathrooms"
+                          :rules="rulesData"
+                          type="number"
+                          label="Jumlah kamar mandi, e.g. 0,1,2,.."
+                          required
+                        ></v-text-field>
 
-                  <h3>Masukkan luas bangunan dalam satuan square feet</h3>
-                  <!-- berupa integer -->
-                  <v-text-field
-                    v-model="sqft_living"
-                    :rules="rulesData"
-                    label="Jumlah luas bangunan, e.g. 2540, etc"
-                    required
-                    type="number"
-                  ></v-text-field>
+                        <h3>Masukkan luas bangunan dalam satuan square feet</h3>
+                        <!-- berupa integer -->
+                        <v-text-field
+                          v-model="sqft_living"
+                          :rules="rulesData"
+                          label="Jumlah luas bangunan, e.g. 2540, etc"
+                          required
+                          type="number"
+                        ></v-text-field>
 
-                  <h3>Masukkan luas tanah dalam satuan square feet</h3>
-                  <!-- berupa integer -->
-                  <v-text-field
-                    v-model="sqft_lot"
-                    :rules="rulesData"
-                    label="Jumlah luas tanah, e.g. 2034, etc"
-                    required
-                    type="number"
-                  ></v-text-field>
+                        <h3>Masukkan luas tanah dalam satuan square feet</h3>
+                        <!-- berupa integer -->
+                        <v-text-field
+                          v-model="sqft_lot"
+                          :rules="rulesData"
+                          label="Jumlah luas tanah, e.g. 2034, etc"
+                          required
+                          type="number"
+                        ></v-text-field>
 
-                  <h3>Masukkan jumlah total lantai di dalam rumah</h3>
-                  <!-- berupa integer -->
-                  <v-text-field
-                    v-model="floors"
-                    :rules="rulesData"
-                    label="Jumlah lantai rumah, e.g. 1,2,.."
-                    required
-                    type="number"
-                  ></v-text-field>
+                        <h3>Masukkan jumlah total lantai di dalam rumah</h3>
+                        <!-- berupa integer -->
+                        <v-text-field
+                          v-model="floors"
+                          :rules="rulesData"
+                          label="Jumlah lantai rumah, e.g. 1,2,.."
+                          required
+                          type="number"
+                        ></v-text-field>
 
-                  <h3>Apakah rumah memiliki pemandangan view ke perairan? (sungat/danau/laut)</h3>
-                  <!-- berupa boolean 1/0 -->
-                  <v-select
-                    v-model="waterfront"
-                    :rules="rulesData"
-                    :items="pilWaterfront"
-                    label="Jika IYA pilih 1, jika TIDAK pilih 0"
-                    required
-                  ></v-select>
-                  
-                  <h3>Berapa penilaian view/tampak luar rumah?</h3>
-                  <!-- berupa option 1-4 -->
-                  <v-select
-                    v-model="view"
-                    :rules="rulesData"
-                    :items="pilView"
-                    label="Isikan sesuai hasil penilaian view rumah anda"
-                    required
-                  ></v-select>
-                  
-                  <h3>Berapa penilaian kondisi bangunan rumah?</h3>
-                  <!-- berupa option 1-5 -->
-                  <v-select
-                    v-model="condition"
-                    :rules="rulesData"
-                    :items="pilCondition"
-                    label="Isikan sesuai hasil penilaian kondisi rumah anda"
-                    required
-                  ></v-select>
+                        <h3>Apakah rumah memiliki pemandangan view ke perairan? (sungat/danau/laut)</h3>
+                        <!-- berupa boolean 1/0 -->
+                        <v-select
+                          v-model="waterfront"
+                          :rules="rulesData"
+                          :items="pilWaterfront"
+                          label="Jika IYA pilih 1, jika TIDAK pilih 0"
+                          required
+                        ></v-select>
+                        
+                        <h3>Berapa penilaian view/tampak luar rumah?</h3>
+                        <!-- berupa option 1-4 -->
+                        <v-select
+                          v-model="view"
+                          :rules="rulesData"
+                          :items="pilView"
+                          label="Isikan sesuai hasil penilaian view rumah anda"
+                          required
+                        ></v-select>
+                        
+                        <h3>Berapa penilaian kondisi bangunan rumah?</h3>
+                        <!-- berupa option 1-5 -->
+                        <v-select
+                          v-model="condition"
+                          :rules="rulesData"
+                          :items="pilCondition"
+                          label="Isikan sesuai hasil penilaian kondisi rumah anda"
+                          required
+                        ></v-select>
 
-                  <h3>Berapa penilaian yang diberikan pada rumah berdasar standar penilaian King County?</h3>
-                  <!-- berupa otpion 1-13 -->
-                  <v-select
-                    v-model="grade"
-                    :rules="rulesData"
-                    :items="pilGrade"
-                    label="Isikan sesuai hasil penilaian King County"
-                    required
-                  ></v-select>
+                        <h3>Berapa penilaian yang diberikan pada rumah berdasar standar penilaian King County?</h3>
+                        <!-- berupa otpion 1-13 -->
+                        <v-select
+                          v-model="grade"
+                          :rules="rulesData"
+                          :items="pilGrade"
+                          label="Isikan sesuai hasil penilaian King County"
+                          required
+                        ></v-select>
 
-                  <h3>Masukkan luas bangunan rumah di atas ground level!</h3>
-                  <!-- berupa integer -->
-                  <v-text-field
-                    v-model="sqft_above"
-                    :rules="rulesData"
-                    label="Luas bangunan di atas level tanah"
-                    required
-                    type="number"
-                  ></v-text-field>
+                        <h3>Masukkan luas bangunan rumah di atas ground level!</h3>
+                        <!-- berupa integer -->
+                        <v-text-field
+                          v-model="sqft_above"
+                          :rules="rulesData"
+                          label="Luas bangunan di atas level tanah"
+                          required
+                          type="number"
+                        ></v-text-field>
 
-                  <h3>Masukkan luas bangunan rumah di bawah ground level (basement) !</h3>
-                  <!-- berupa integer -->
-                  <v-text-field
-                    v-model="sqft_basement"
-                    :rules="rulesData"
-                    label="Luas bangunan di bawah level tanah"
-                    required
-                    type="number"
-                  ></v-text-field>
+                        <h3>Masukkan luas bangunan rumah di bawah ground level (basement) !</h3>
+                        <!-- berupa integer -->
+                        <v-text-field
+                          v-model="sqft_basement"
+                          :rules="rulesData"
+                          label="Luas bangunan di bawah level tanah"
+                          required
+                          type="number"
+                        ></v-text-field>
 
-                  <h3>Masukkan tahun pembangunan rumah!</h3>
-                  <!-- berupa date year -->
-                  <v-text-field
-                    v-model="yr_built"
-                    :rules="rulesData"
-                    label="Tahun bangunan dibangun"
-                    required
-                    type="number"
-                  ></v-text-field>
+                        <h3>Masukkan tahun pembangunan rumah!</h3>
+                        <!-- berupa date year -->
+                        <v-text-field
+                          v-model="yr_built"
+                          :rules="rulesData"
+                          label="Tahun bangunan dibangun"
+                          required
+                          type="number"
+                        ></v-text-field>
 
-                  <h3>Masukkan tahun terakhir renovasi rumah!</h3>
-                  <!-- berupa date year, bisa 0 -->
-                  <v-text-field
-                    v-model="yr_renovated"
-                    :rules="rulesData"
-                    label="Tahun bangunan direnovasi terakhir kali"
-                    required
-                    type="number"
-                  ></v-text-field>
+                        <h3>Masukkan tahun terakhir renovasi rumah!</h3>
+                        <!-- berupa date year, bisa 0 -->
+                        <v-text-field
+                          v-model="yr_renovated"
+                          :rules="rulesData"
+                          label="Tahun bangunan direnovasi terakhir kali"
+                          required
+                          type="number"
+                        ></v-text-field>
 
-                  <h3>Masukkan kode pos rumah anda!</h3>
-                  <!-- integer -->
-                  <v-text-field
-                    v-model="zipcode"
-                    :rules="rulesData"
-                    label="Kode pos rumah anda"
-                    required
-                  ></v-text-field>
+                        <h3>Masukkan kode pos rumah anda!</h3>
+                        <!-- integer -->
+                        <v-text-field
+                          v-model="zipcode"
+                          :rules="rulesData"
+                          label="Kode pos rumah anda"
+                          required
+                        ></v-text-field>
 
-                  <h3>Masukkan koordinat Latitude rumah anda!</h3>
-                  <!-- float -->
-                  <v-text-field
-                    v-model="lat"
-                    :rules="rulesData"
-                    label="Koordinat latitude rumah anda, e.g. 47.5112"
-                    required
-                  ></v-text-field>
+                        <h3>Masukkan koordinat Latitude rumah anda!</h3>
+                        <!-- float -->
+                        <v-text-field
+                          v-model="lat"
+                          :rules="rulesData"
+                          label="Koordinat latitude rumah anda, e.g. 47.5112"
+                          required
+                        ></v-text-field>
 
-                  <h3>Masukkan koordinat Longitude rumah anda!</h3>
-                  <!-- float -->
-                  <v-text-field
-                    v-model="long"
-                    :rules="rulesData"
-                    label="Koordinat longitude rumah anda, e.g. -122.257"
-                    required
-                  ></v-text-field>
+                        <h3>Masukkan koordinat Longitude rumah anda!</h3>
+                        <!-- float -->
+                        <v-text-field
+                          v-model="long"
+                          :rules="rulesData"
+                          label="Koordinat longitude rumah anda, e.g. -122.257"
+                          required
+                        ></v-text-field>
 
-                  <h3>Masukkan luas bangunan dalam satuan square feet pada tahun 2015!</h3>
-                  <!-- berupa integer -->
-                  <v-text-field
-                    v-model="sqft_living15"
-                    :rules="rulesData"
-                    label="Luas bangunan pada tahun 2015"
-                    required
-                    type="number"
-                  ></v-text-field>
+                        <h3>Masukkan luas bangunan dalam satuan square feet pada tahun 2015!</h3>
+                        <!-- berupa integer -->
+                        <v-text-field
+                          v-model="sqft_living15"
+                          :rules="rulesData"
+                          label="Luas bangunan pada tahun 2015"
+                          required
+                          type="number"
+                        ></v-text-field>
 
-                  <h3>Masukkan luas tanah dalam satuan square feet pada tahun 2015!</h3>
-                  <!-- berupa integer -->
-                  <v-text-field
-                    v-model="sqft_lot15"
-                    :rules="rulesData"
-                    label="Luas tanah pada tahun 2015"
-                    required
-                    type="number"
-                  ></v-text-field>
-                </v-form>
-                <!-- BUTUH ID RUMAH -->
-                
+                        <h3>Masukkan luas tanah dalam satuan square feet pada tahun 2015!</h3>
+                        <!-- berupa integer -->
+                        <v-text-field
+                          v-model="sqft_lot15"
+                          :rules="rulesData"
+                          label="Luas tanah pada tahun 2015"
+                          required
+                          type="number"
+                        ></v-text-field>
+                      </v-form>
+                      <!-- BUTUH ID RUMAH -->
+                      
 
-                <!-- BUTUH ATRIBUT DATA DATE, TENTUKAN BENTUKNYA DULU -->
-              </v-card>
+                      <!-- BUTUH ATRIBUT DATA DATE, TENTUKAN BENTUKNYA DULU -->
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
             </v-col>
             <v-spacer></v-spacer>
             <v-col
@@ -333,9 +355,9 @@ export default {
     sqft_lot: '',
     floors: '',
     waterfront: '',
-    pilWaterfront: [0,1],
+    pilWaterfront: ['0','1'],
     view: '',
-    pilView: [1,2,3,4],
+    pilView: ['0','1','2','3','4'],
     condition: '',
     pilCondition: [1,2,3,4,5],
     grade:'',
